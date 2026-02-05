@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Chief Secretariat
 
-## Getting Started
+AI-first personal inbox: capture raw notes, classify and schedule automatically. Phase 1 MVP per the architecture document.
 
-First, run the development server:
+## Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Next.js 16 (App Router), TypeScript (strict), Supabase (Auth + Postgres + RLS), OpenAI API.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Environment**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   Copy `.env.example` to `.env` and set:
 
-## Learn More
+   - `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (from Supabase project)
+   - `OPENAI_API_KEY` (for AI classification)
 
-To learn more about Next.js, take a look at the following resources:
+2. **Supabase**
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+   - Create a project at [supabase.com](https://supabase.com).
+   - In **SQL Editor**, run the migration:  
+     `supabase/migrations/001_initial_schema.sql`  
+     (creates `inbox_items`, `shopping_items`, and RLS).
+   - In **Authentication → URL Configuration**, add redirect URL:  
+     `http://localhost:3000/auth/callback`  
+     (and your production URL when you deploy).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+3. **Run**
 
-## Deploy on Vercel
+   ```bash
+   npm install
+   npm run dev
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+   Open [http://localhost:3000](http://localhost:3000). Sign up, then capture notes; they are classified and shown in Inbox, Today, Shopping, Ideas, Unsure, etc.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Project structure
+
+- `app/` — App Router: `/` (redirect), `/login`, `/signup`, `/app/*` (dashboard + views), `/api/inbox`, `/api/shopping`, `/api/auth/callback`.
+- `lib/supabase/` — Server and browser Supabase clients; middleware for auth refresh.
+- `lib/ai/` — Versioned prompt, JSON schema validation, `classify()` (OpenAI).
+- `lib/db/` — Types and due-day query helpers.
+- `components/` — Capture form, toast, nav, list/item UI (minimal).
+- `supabase/migrations/` — Schema and RLS.
+
+## Architecture (Phase 1)
+
+- **Single source of truth:** every input is stored first as an `inbox_items` row; `raw_text` is never modified.
+- **Derived data:** `shopping_items` and due-day views are derived from inbox; rebuildable and disposable.
+- **AI:** One OpenAI call per capture; response validated against Appendix B schema; on failure → Inbox + Unsure (capture still saved).
+- **No service_role on client;** RLS on all tables.
+
+See `MVP Architecture Intent & Phase-model-Numan.md` and `PROJECT_STRUCTURE.md` for full details.
