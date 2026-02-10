@@ -17,10 +17,12 @@ export default async function AppLayout({
   }
 
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen flex flex-col bg-[var(--background)]">
       <Nav />
       <CaptureForm />
-      <main className="flex-1 p-4">{children}</main>
+      <main className="flex-1 w-full max-w-6xl mx-auto px-4 py-6 sm:px-6 sm:py-8">
+        {children}
+      </main>
     </div>
   );
 }

@@ -20,6 +20,10 @@ export interface InboxItem {
   ai_raw: Record<string, unknown>;
   prompt_version: string;
   created_at: string;
+  /** UNBU retention: set by trigger from profiles.plan; null = paid / no expiry */
+  purge_at: string | null;
+  /** UNBU: plan at creation (free | light | heavy) */
+  plan_at_creation: string | null;
 }
 
 /** Derived from inbox; rebuildable; linked by inbox_item_id. */

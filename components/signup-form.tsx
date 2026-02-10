@@ -27,29 +27,37 @@ export function SignupForm() {
   }
 
   return (
-    <form onSubmit={submit} className="space-y-3">
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-        className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        required
-        minLength={6}
-        className="w-full border border-gray-300 rounded px-3 py-2 text-sm"
-      />
-      {error && <p className="text-red-600 text-sm">{error}</p>}
+    <form onSubmit={submit} className="space-y-4">
+      <div>
+        <label htmlFor="signup-email" className="sr-only">Email</label>
+        <input
+          id="signup-email"
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+          className="w-full border border-[var(--card-border)] rounded-lg bg-[var(--background)] px-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+        />
+      </div>
+      <div>
+        <label htmlFor="signup-password" className="sr-only">Password</label>
+        <input
+          id="signup-password"
+          type="password"
+          placeholder="Password (min 6 characters)"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          minLength={6}
+          className="w-full border border-[var(--card-border)] rounded-lg bg-[var(--background)] px-4 py-2.5 text-sm text-[var(--foreground)] placeholder-[var(--muted)] focus:outline-none focus:ring-2 focus:ring-[var(--primary)]"
+        />
+      </div>
+      {error && <p className="text-[var(--error)] text-sm">{error}</p>}
       <button
         type="submit"
         disabled={loading}
-        className="w-full bg-gray-800 text-white py-2 rounded text-sm disabled:opacity-50"
+        className="w-full rounded-lg bg-[var(--primary)] py-2.5 text-sm font-medium text-white hover:bg-[var(--primary-hover)] disabled:opacity-50 focus-ring"
       >
         {loading ? "Signing up…" : "Sign up"}
       </button>

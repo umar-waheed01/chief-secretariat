@@ -12,22 +12,27 @@ export default async function IdeasPage() {
     .order("created_at", { ascending: false });
 
   return (
-    <div>
-      <h1 className="text-lg font-semibold mb-3">Ideas</h1>
+    <div className="space-y-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-[var(--foreground)]">Ideas</h1>
+        <p className="mt-1 text-sm text-[var(--muted)]">Ideas list</p>
       {!items?.length ? (
-        <p className="text-gray-500 text-sm">No ideas yet.</p>
+        <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-8 text-center">
+          <p className="text-[var(--muted)]">No ideas yet.</p>
+        </div>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {items.map((item) => (
             <li
               key={item.id}
-              className="border border-gray-200 rounded p-3 text-sm"
+              className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-4 shadow-sm"
             >
               {formatInboxItem(item)}
             </li>
           ))}
         </ul>
       )}
+      </div>
     </div>
   );
 }

@@ -16,15 +16,21 @@ const views = [
 
 export default function AppHomePage() {
   return (
-    <div>
-      <h1 className="text-lg font-semibold mb-4">Chief Secretariat</h1>
-      <ul className="space-y-2">
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold text-[var(--foreground)]">Dashboard</h1>
+        <p className="mt-1 text-sm text-[var(--muted)]">Quick access to your views</p>
+      </div>
+      <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {views.map(({ href, label, desc }) => (
           <li key={href}>
-            <Link href={href} className="text-blue-600 hover:underline">
-              {label}
+            <Link
+              href={href}
+              className="flex flex-col rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-4 shadow-sm transition-colors hover:border-[var(--primary)]/30 hover:shadow focus-ring"
+            >
+              <span className="font-medium text-[var(--foreground)]">{label}</span>
+              <span className="mt-1 text-sm text-[var(--muted)]">{desc}</span>
             </Link>
-            <span className="text-gray-500 text-sm ml-2">{desc}</span>
           </li>
         ))}
       </ul>

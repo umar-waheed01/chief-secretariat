@@ -19,16 +19,21 @@ export default async function TodayPage() {
   );
 
   return (
-    <div>
-      <h1 className="text-lg font-semibold mb-3">Today</h1>
+    <div className="space-y-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-[var(--foreground)]">Today</h1>
+        <p className="mt-1 text-sm text-[var(--muted)]">Due today</p>
+      </div>
       {!filtered.length ? (
-        <p className="text-gray-500 text-sm">Nothing due today.</p>
+        <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-8 text-center">
+          <p className="text-[var(--muted)]">Nothing due today.</p>
+        </div>
       ) : (
-        <ul className="space-y-2">
+        <ul className="space-y-3">
           {filtered.map((item) => (
             <li
               key={item.id}
-              className="border border-gray-200 rounded p-3 text-sm"
+              className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-4 shadow-sm"
             >
               {formatInboxItem(item)}
             </li>

@@ -10,13 +10,14 @@ export default async function SignupPage() {
   if (user) redirect("/app");
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-sm border border-gray-200 rounded-lg p-6">
-        <h1 className="text-lg font-semibold mb-4">Sign up</h1>
+    <div className="min-h-screen flex items-center justify-center p-4 sm:p-6 bg-[var(--background)]">
+      <div className="w-full max-w-md rounded-2xl border border-[var(--card-border)] bg-[var(--card)] p-6 shadow-sm sm:p-8">
+        <h1 className="text-xl font-semibold text-[var(--foreground)] mb-1">Create account</h1>
+        <p className="text-sm text-[var(--muted)] mb-6">Sign up for Chief Secretariat</p>
         <SignupForm />
-        <p className="text-sm text-gray-500 mt-4">
+        <p className="text-sm text-[var(--muted)] mt-6 text-center">
           Already have an account?{" "}
-          <a href="/login" className="text-blue-600">
+          <a href="/login" className="font-medium text-[var(--primary)] hover:underline focus-ring rounded">
             Log in
           </a>
         </p>

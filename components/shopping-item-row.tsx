@@ -39,18 +39,20 @@ export function ShoppingItemRow({
   }
 
   return (
-    <label className="flex items-center gap-2 py-1 text-sm cursor-pointer">
+    <label className="flex cursor-pointer items-center gap-3 py-1 text-sm text-[var(--foreground)]">
       <input
         type="checkbox"
         checked={checked}
         onChange={toggle}
         disabled={loading}
-        className="rounded"
+        className="h-4 w-4 rounded border-[var(--card-border)] text-[var(--primary)] focus:ring-2 focus:ring-[var(--primary)] focus:ring-offset-0"
       />
-      <span className={checked ? "line-through text-gray-500" : ""}>
+      <span className={checked ? "line-through text-[var(--muted)]" : ""}>
         {itemName}
       </span>
-      {store && <span className="text-gray-400 text-xs">({store})</span>}
+      {store && (
+        <span className="text-xs text-[var(--muted)]">({store})</span>
+      )}
     </label>
   );
 }

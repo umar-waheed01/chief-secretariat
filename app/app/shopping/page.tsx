@@ -9,16 +9,21 @@ export default async function ShoppingPage() {
     .order("id", { ascending: true });
 
   return (
-    <div>
-      <h1 className="text-lg font-semibold mb-3">Shopping List</h1>
+    <div className="space-y-4">
+      <div>
+        <h1 className="text-2xl font-semibold text-[var(--foreground)]">Shopping List</h1>
+        <p className="mt-1 text-sm text-[var(--muted)]">Checkable items</p>
+      </div>
       {!items?.length ? (
-        <p className="text-gray-500 text-sm">No shopping items yet.</p>
+        <div className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] p-8 text-center">
+          <p className="text-[var(--muted)]">No shopping items yet.</p>
+        </div>
       ) : (
-        <ul className="space-y-1">
+        <ul className="space-y-2">
           {items.map((item) => (
             <li
               key={item.id}
-              className="border border-gray-200 rounded px-3 py-2"
+              className="rounded-xl border border-[var(--card-border)] bg-[var(--card)] px-4 py-3 shadow-sm"
             >
               <ShoppingItemRow
                 id={item.id}
